@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'detail_page.dart'; // Add the import for the detail page
 
 class NamaTab1 extends StatefulWidget {
   const NamaTab1({super.key});
@@ -24,7 +25,7 @@ class _NamaTab1State extends State<NamaTab1> {
     'Kelinci',
     'Hamster',
     'Ikan',
-    'Burung Lovebird',
+    'Burung Lovebird'
   ];
 
   // Daftar URL gambar hewan
@@ -39,11 +40,6 @@ class _NamaTab1State extends State<NamaTab1> {
     'https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRAgjeh_PZSC9gUmlm1dzEkbCsP71owoucsFWhoIYYpp7u1czrj',
     'https://cdn.antaranews.com/cache/1200x800/2022/10/13/CjkinzN007006_20221013_CBMFN0A001.jpg',
     'https://pict.sindonews.net/dyn/850/pena/news/2023/11/09/766/1247657/bukan-cuma-satu-ini-9-jenis-kambing-yang-ditemukan-di-indonesia-utk.JPG',
-    'https://www.tierragro.com/wp-content/uploads/2021/05/2624C10A-9CC7-408C-8B5F-39AEFB8E2B99.jpeg',
-    'https://cdn0-production-images-kly.akamaized.net/3pHqTm2ctnH4T72ZSoKEnYAY9eM=/640x0/filters:no_upscale/quality:90/1*ndS81wxpFSpBuY0jZOKhfA.jpeg',
-    'https://www.buddy-bunny.com/wp-content/uploads/2020/01/12-2.png',
-    'https://www.ajaib.com/wp-content/uploads/2022/01/ikan-hias-murah-ajaib.jpg',
-    'https://cdn1-production-images-kly.akamaized.net/oJ4BaUAWoBBmK2DdQ0qhu2tuyzE=/640x0/filters:no_upscale/quality:90/1*1u0v24INHOUZrBy2EUVr8w.jpeg',
   ];
 
   final List<String> _descriptions = [
@@ -64,23 +60,17 @@ class _NamaTab1State extends State<NamaTab1> {
     'Burung Lovebird itu romantis. Mereka suka berpasangan dan saling menyayangi.',
   ];
 
-  void _showDescription(BuildContext context, String description) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('Hobby'),
-          content: Text(description),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('Tutup'),
-            ),
-          ],
-        );
-      },
+  void _navigateToDetailPage(BuildContext context, String animalName,
+      String imageUrl, String description) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => DetailPage(
+          animalName: animalName,
+          imageUrl: imageUrl,
+          description: description,
+        ),
+      ),
     );
   }
 
@@ -106,7 +96,12 @@ class _NamaTab1State extends State<NamaTab1> {
                   ),
                   title: Text(_animals[index]),
                   onTap: () {
-                    _showDescription(context, _descriptions[index]);
+                    _navigateToDetailPage(
+                      context,
+                      _animals[index],
+                      _images[index],
+                      _descriptions[index],
+                    );
                   },
                 ),
               ),

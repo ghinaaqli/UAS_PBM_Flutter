@@ -8,7 +8,7 @@ class NamaTab2 extends StatefulWidget {
 }
 
 class _NamaTab2State extends State<NamaTab2> {
-  List<String> _cartItems = [];
+  final List<String> _cartItems = [];
   final List<String> _animals = [
     'Kucing',
     'Anjing',
@@ -54,6 +54,32 @@ class _NamaTab2State extends State<NamaTab2> {
     });
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text('$animal ditambahkan ke keranjang')),
+    );
+  }
+
+  void _goToCheckout() {
+    // Implementasikan checkout atau pembayaran di sini
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Checkout'),
+        content: const Text('Apakah Anda ingin melanjutkan ke pembayaran?'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text('Batal'),
+          ),
+          TextButton(
+            onPressed: () {
+              // Arahkan ke halaman pembayaran
+              Navigator.pop(context);
+            },
+            child: const Text('Lanjutkan'),
+          ),
+        ],
+      ),
     );
   }
 
@@ -113,13 +139,18 @@ class _NamaTab2State extends State<NamaTab2> {
                     onPressed: () {
                       _addToCart(_animals[index]);
                     },
-                    child: const Text('Checkout'),
+                    child: const Text('Tambah ke Keranjang'),
                   ),
                 ],
               ),
             );
           },
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _goToCheckout,
+        child: const Icon(Icons.payment),
+        backgroundColor: Colors.teal,
       ),
     );
   }
